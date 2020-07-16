@@ -6,48 +6,136 @@
     <title>
         game
     </title>
-    
+    <style>
+        #infoBox {
+            display: flex;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            justify-content: center;
+        }
+        .playBox {
+            text-align: center;
+            width: 200px;
+        }
+        .playBox h1 {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .playBox h3 {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        #startBox{
+            display: flex;
+            align-items: center;
+        }
+        #app {
+            border: 1px solid #ececec;
+            padding: 10px 10px;
+            margin: 0 auto;
+            width: 600px;
+        }
+        #operationBox {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 5px;
+            border-top: 1px solid #ececec;
+            background-color: #f0f0f0;
+            margin: 0 auto;
+        }
+    </style>
+   
+
 </head>
 <body>
     <script>
-
+        let humanScore = 0;
+        let computerScore = 0;
+        let humanHand = 0;
+        let computerHand = 0;
+        function start() {
+            alert(“积分清零，游戏开始”)
+            humanScore = 0;
+            computerScore = 0;
+            refreshUI();
+        }
+        function play(playerHand) {
+            computerHand = Math.ceil(Math.random()*3);
+            humanHand = playerHand;
+            if ( humanHand - computerHand === 1 || humanHand - computerHand === -2) {
+                humanScore ++;
+            }
+            else if (computerHand - humanHand === 1 || computerHand - humanHand === -2) {
+                computerScore ++;
+            }
+            refreshUI();
+        }
+        function refreshUI() {
+            document.getElementById("humanScore").innerText = "Score:" + computerScore;
+            document.getElementById("computerScore").innerText = "Score:" + computerScore;
+            let pictureName = "img/human.jpg";
+            if (humanHand === 1) {
+                pictureName = "img/human_scissor.jpg";
+            }
+            else if (humanHand === 2) {
+                pictureName = "img/human_rock.png";
+            }
+            else if (humanHand === 3) {
+                pictureName = "img/human_paper.jpg";
+            }
+            document.getElementById("humanHand").setAttribute("src", pictureName);
+            pictureName = "img/computer.jpg";
+            if (computerHand === 1) {
+                pictureName = "img/computer_scissor.jpg";
+            }
+            else if (computerHand === 2) {
+                pictureName = "img/computer_rock.png";
+            }
+            else if (computerHand === 3) {
+                pictureName = "img/computer_paper.jpg";
+            }
+            document.getElementById("computerHand").setAttribute("src",pictureName);
+        }
     </script>
-    <div id="infoBox">
-        <div id="humanBox">
-            <img src="img/human.jpg" width="100px" />
-            <h1>
-                me
-            </h1>
-            <h3>
-                Score
-            </h3>
-        </div>
-        <button>
-            开始
-        </button>
-        <div id="computerBox">
-            <div id="humanBox">
-                <img src="img/computer.jpg" width="100px" />
+    <div id="app">
+        <div id="infoBox">
+            <div id="humanBox" class="playerBox">
+                <img id="humanHand" src="img/human.jpg" width="100px" />
                 <h1>
-                     computer
+                    me
                 </h1>
-                <h3>
-                    Score:
+                <h3 id="humanScore">
+                    Score:0
                 </h3>
             </div>
+            <div id="startBox">
+                <button onclick="start()">
+                    开始
+                </button>
+            </div>
+            <div id="computerBox" class="playerBox">
+                <div id="humanBox">
+                    <img id="computerHand" src="img/computer.jpg" width="100px" />
+                    <h1>
+                        computer
+                    </h1>
+                    <h3 id="computerScore">
+                        Score:0
+                    </h3>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <div id="operationBox">
-        <button>
-            剪刀
-        </button>
-        <button>
-            石头
-        </button>
-        <button>
-            布
-        </button>
+        <div id="operationBox">
+            <button onclick="play(1)">
+                剪刀
+            </button>
+            <button onclick="play(2)">
+                石头
+            </button>
+            <button onclick="play(3)">
+                布
+            </button>
+        </div>
     </div>
 </body>
 </html>
